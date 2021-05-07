@@ -1,0 +1,35 @@
+<div class="container">
+  <table class="customers">
+    <tr>
+      <th (click)="sortToggle('accountSort')">
+        Account
+        <i class="fas fa-angle-down" *ngIf="sortOptions.accountSort === 'desc' || sortOptions.accountSort === 'default'"></i>
+        <i class="fas fa-angle-up" *ngIf="sortOptions.accountSort === 'asc'"></i>
+      </th>
+      <th (click)="sortToggle('availableCashSort')" class="header">
+        Available Cash
+        <i class="fas fa-angle-down" *ngIf="sortOptions.availableCashSort === 'desc' || sortOptions.availableCashSort === 'default'"></i>
+        <i class="fas fa-angle-up" *ngIf="sortOptions.availableCashSort === 'asc'"></i>
+        <p class="today-change">Today's change</p>
+      </th>
+    </tr>
+    <tr *ngFor="let record of bankRecords">
+      <td>
+        <span class="account-number">
+          {{record.accountNumber}}
+        </span>
+      </td>
+      <td>
+        {{record.availableCash}}
+        <p [ngStyle]="{'font-size': '14px', 'color': getColor(record.changeType)}">
+          {{ record.changeType === 'negative' ? '-' : '+' }}{{ record.changePercentage }} / {{ record.changeValue }}
+        </p>
+      </td>
+    </tr>
+    <tfoot *ngIf="!showAllRecords">
+      <tr (click)="showMore()">
+        <td class="load-more" colspan = "2">Load more</td>
+      </tr>
+  </tfoot>
+  </table>
+</div>
